@@ -1,0 +1,45 @@
+# ADE20K (150 classes) -- RGLP refinement.
+# Run with:  python tools/test.py --cfg config/ade20k_rglp.yaml --model_module model.model_sfp_dtlr
+DATASET:
+  NAME: 'ade'
+  NUM_CLASSES: 150
+  DATAROOT: 'data/ADEChallengeData2016/'
+  SCALE: [2048, 512]
+  RATIO_RANGE: [0.5, 2.0]
+  CROP_SIZE: [512, 512]
+  CAT_MAX_RATIO: 0.75
+  IMG_NORM_CFG:
+    MEAN: [122.771, 116.746, 104.094]
+    STD: [68.501, 66.632, 70.323]
+    RGB: True
+  TEXT_WEIGHT: 'text/ade_ViT16_clip_text.pth'
+  REDUCE_ZERO_LABEL: TRUE
+  IGNORE_INDEX: 255
+
+MODEL:
+  FEATURE_EXTRACTOR: 'vit'
+  TEXT_CHANNEL: 512
+  VISUAL_CHANNEL: 768
+  TRAINING: False
+  SFP_DTLR:
+    # Source-selected profile, identical to config/voc_rglp.yaml. No ADE20K tuning.
+    TOP_FRACTION: 0.75
+    DTLR_SIGMA_S_REL: 2.3
+    DTLR_BETA: 1.0
+    PROXY_LAMBDA: 1.0
+    DTLR_STRUCTURE_CLASSES: []
+    # Absolute reliability gates (listed for transparency; equal to the code defaults):
+    CONF_THD: 0.97
+    CONF_SCALE: 10.0
+    PROXY_CONF_THD: 0.95
+    PROXY_KERNEL: 5
+
+TEST:
+  BATCH_SIZE: 1
+  PD: 0.85
+  ReCLIP_PD: 0.6
+
+EVAL_METRIC: "miou"
+SAVE_DIR: "outputs/ade20k_rglp/"
+LOAD_PATH: "weights/ade20k/best_weight.pth"
+NUM_WORKERS: 4

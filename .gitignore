@@ -1,0 +1,53 @@
+# --- Datasets, checkpoints, experiment outputs ---
+data/
+datasets/
+weights/
+checkpoints/
+outputs/
+experiments/
+
+# Model weights and predictions are not tracked ...
+*.pth
+*.pt
+*.ckpt
+*.npy
+*.npz
+# ... except the small runtime assets this repository needs to run.
+!text/voc_ViT16_clip_text.pth
+!text/ade_ViT16_clip_text.pth
+!text/stuff27_ViT16_clip_text.pth
+!utils/cls_token.pt
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Editors / IDE / agent state ---
+.idea/
+.vscode/
+*.iml
+.claude/
+.agents/
+.codex/
+
+# --- Logs and temporary files ---
+*.log
+*.bak*
+*.tmp
+*.swp
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+desktop.ini

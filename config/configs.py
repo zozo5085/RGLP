@@ -1,0 +1,95 @@
+import yaml
+from easydict import EasyDict as edict
+
+cfg = edict()
+
+cfg.DATASET = edict()
+cfg.DATASET.NAME = ''
+cfg.DATASET.NUM_CLASSES = 0
+cfg.DATASET.REDUCE_ZERO_LABEL = True
+cfg.DATASET.DATAROOT = ''
+cfg.DATASET.SCALE = []
+cfg.DATASET.RATIO_RANGE = []
+cfg.DATASET.CROP_SIZE = []
+cfg.DATASET.CAT_MAX_RATIO = 0
+cfg.DATASET.TEXT_WEIGHT = ''
+cfg.DATASET.IMG_NORM_CFG = edict()
+cfg.DATASET.IMG_NORM_CFG.MEAN = []
+cfg.DATASET.IMG_NORM_CFG.STD = []
+cfg.DATASET.IMG_NORM_CFG.RGB = True
+cfg.DATASET.K = 0
+cfg.DATASET.DISTILL_K = 0
+cfg.DATASET.THRESHOLD = 0
+cfg.DATASET.IGNORE_INDEX = 255
+cfg.DATASET.PALETTE = []
+
+cfg.MODEL = edict()
+cfg.MODEL.FEATURE_EXTRACTOR = ''
+cfg.MODEL.TEXT_CHANNEL = 0
+cfg.MODEL.VISUAL_CHANNEL = 0
+cfg.MODEL.TRAINING = False
+cfg.MODEL.SFP_DTLR = edict()
+cfg.MODEL.SFP_DTLR.TOPK = 800
+cfg.MODEL.SFP_DTLR.TOP_FRACTION = -1.0
+cfg.MODEL.SFP_DTLR.CONF_THD = 0.97
+cfg.MODEL.SFP_DTLR.CONF_SCALE = 10.0
+cfg.MODEL.SFP_DTLR.LOGIT_BETA = 0.55
+cfg.MODEL.SFP_DTLR.PROXY_LAMBDA = 2.0
+cfg.MODEL.SFP_DTLR.PROXY_CONF_THD = 0.95
+cfg.MODEL.SFP_DTLR.PROXY_KERNEL = 5
+cfg.MODEL.SFP_DTLR.DTLR_BETA = 1.20
+cfg.MODEL.SFP_DTLR.DTLR_SIGMA_S = 70.0
+cfg.MODEL.SFP_DTLR.DTLR_SIGMA_S_REL = -1.0
+cfg.MODEL.SFP_DTLR.DTLR_SIGMA_R = 1.50
+cfg.MODEL.SFP_DTLR.DTLR_NUM_ITER = 1
+cfg.MODEL.SFP_DTLR.DTLR_STRUCTURE_GAIN_THD = 0.00
+cfg.MODEL.SFP_DTLR.DTLR_STRUCTURE_CLASSES = [4, 8, 10]
+# Dataset-agnostic entropy-normalized reliability gate (de-VOC code fix 2026-07-08).
+# ENTROPY_GATE off => original absolute max-prob CONF_THD/PROXY_CONF_THD gates (VOC-original).
+cfg.MODEL.SFP_DTLR.ENTROPY_GATE = False
+cfg.MODEL.SFP_DTLR.ENTROPY_TAU_UNREL = 0.0745
+cfg.MODEL.SFP_DTLR.ENTROPY_TAU_REL = 0.1154
+# Component-ablation switches (Table IV). True == shipped behavior.
+cfg.MODEL.SFP_DTLR.PROXY_ENABLE = True
+cfg.MODEL.SFP_DTLR.DTLR_ENABLE = True
+cfg.MODEL.SFP_DTLR.CPSFP_UPDATE = True
+
+cfg.TRAIN = edict()
+cfg.TRAIN.BATCH_SIZE = 1
+cfg.TRAIN.MAX_EPOCH = 50
+cfg.TRAIN.EPOCH = 0
+cfg.TRAIN.MAX_ITER = 0
+cfg.TRAIN.LR = 0
+cfg.TRAIN.LOG = ''
+
+cfg.TEST = edict()
+cfg.TEST.BATCH_SIZE = 0
+cfg.TEST.PD = 0
+cfg.TEST.ReCLIP_PD = 0.5
+
+cfg.EVAL_METRIC = ''
+cfg.SAVE_DIR = ''
+cfg.NUM_WORKERS = 0
+cfg.LOAD_PATH = ''
+cfg.LOAD_DISTILL_PATH = ''
+
+def merge_a_to_b(a, b):
+    if type(a) is not edict:
+        return
+    for k in a:
+        if k not in b:
+            raise KeyError('{} is not a valid config key'.format(k))
+        if type(a[k]) is edict:
+            merge_a_to_b(a[k], b[k])
+        else:
+            b[k] = a[k]
+    return cfg
+
+
+def cfg_from_file(filename):
+
+    with open(filename, 'r') as f:
+        yaml_cfg = edict(yaml.load(f, Loader=yaml.FullLoader))
+    merge_a_to_b(yaml_cfg, cfg)
+    return cfg
+

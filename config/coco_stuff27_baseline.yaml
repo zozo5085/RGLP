@@ -1,0 +1,33 @@
+# COCO-Stuff (27-class protocol) -- baseline (no refinement).
+# Labels follow the 27-class merge, not the 171-class protocol.
+# Run with:  python tools/test.py --cfg config/coco_stuff27_baseline.yaml --model_module model.model
+DATASET:
+  NAME: 'stuff'
+  NUM_CLASSES: 27
+  DATAROOT: 'data/COCOStuff27/'
+  SCALE: [2048, 512]
+  RATIO_RANGE: [0.5, 2.0]
+  CROP_SIZE: [512, 512]
+  CAT_MAX_RATIO: 0.75
+  IMG_NORM_CFG:
+    MEAN: [122.771, 116.746, 104.094]
+    STD: [68.501, 66.632, 70.323]
+    RGB: True
+  TEXT_WEIGHT: 'text/stuff27_ViT16_clip_text.pth'
+  REDUCE_ZERO_LABEL: FALSE
+
+MODEL:
+  FEATURE_EXTRACTOR: 'vit'
+  TEXT_CHANNEL: 512
+  VISUAL_CHANNEL: 768
+  TRAINING: False
+
+TEST:
+  BATCH_SIZE: 1
+  PD: 0.85
+  ReCLIP_PD: 0.6
+
+EVAL_METRIC: "miou"
+SAVE_DIR: "outputs/coco_stuff27_baseline/"
+LOAD_PATH: "weights/coco_stuff27/best_weight.pth"
+NUM_WORKERS: 4

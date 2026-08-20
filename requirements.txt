@@ -1,0 +1,17 @@
+# Python packages imported by this repository.
+# Install PyTorch first, matching your CUDA version: https://pytorch.org/get-started/locally/
+# Reference environment used by the authors: torch 2.11.0.dev+cu128, torchvision 0.26.0.dev+cu128,
+# numpy 2.2.6, opencv 5.0.0, pillow 12.0.0, pyyaml 6.0.3 (Python 3.10, single NVIDIA GPU).
+
+torch
+torchvision
+numpy
+opencv-python
+pillow
+pyyaml
+easydict
+
+# CLIP (ViT-B/16 backbone) -- OpenAI reference implementation:
+# pip install git+https://github.com/openai/CLIP.git
+ftfy
+regex
