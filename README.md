@@ -1,5 +1,3 @@
-# RGLP
-
 **On the Transferability of Reliability-Guided Logit Purification in Training-Free CLIP Semantic Segmentation**
 
 RGLP studies reliability-guided logit purification and its transferability for training-free
@@ -123,19 +121,7 @@ RGLP/
 └── .gitignore
 ```
 
-## Citation
 
-The paper is not yet published. A citation entry will be added here once it is available.
-
-```bibtex
-@article{rglp2026,
-  title  = {On the Transferability of Reliability-Guided Logit Purification in
-            Training-Free CLIP Semantic Segmentation},
-  author = {},
-  journal= {},
-  year   = {2026}
-}
-```
 
 ## Acknowledgements
 
