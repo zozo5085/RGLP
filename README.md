@@ -16,12 +16,6 @@ pip install -r requirements.txt
 pip install git+https://github.com/openai/CLIP.git
 ```
 
-Install PyTorch for your own CUDA version first if the default wheel does not match your
-system: https://pytorch.org/get-started/locally/
-
-All commands below are run from the repository root, because the configs and the model load
-their assets through relative paths (`text/`, `utils/cls_token.pt`).
-
 ## Dataset Layout
 
 ```
