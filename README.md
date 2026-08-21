@@ -37,8 +37,6 @@ data/
 `COCOStuff27/` uses the 27-class COCO-Stuff protocol (the merged stuff/thing categories),
 not the 171-class protocol.
 
-To use a different location, edit `DATASET.DATAROOT` in the corresponding config file.
-
 ## Checkpoints
 
 Pretrained checkpoints will be released separately. **Coming soon.**
